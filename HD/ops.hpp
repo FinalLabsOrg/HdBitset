@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "hdbitset.hpp"
+#include "hdops.hpp"
 
 namespace hyperdimensional {
 
@@ -35,7 +36,7 @@ namespace hyperdimensional {
 	template<unsigned uSize>
 	inline unsigned ops<uSize>::hamming(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd)
 	{
-		return static_cast<unsigned>( ((*pLeftHd) ^ (*pRightHd)).count() );
+		return hdops::XOR(pLeftHd, pRightHd)->count_u();
 	}
 
 	template<unsigned uSize>

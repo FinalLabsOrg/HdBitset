@@ -76,6 +76,7 @@ namespace hyperdimensional {
         bool bMovableBit = std::bitset<uSize>::test(uSize - 1);
         std::bitset<uSize>::operator<<=(1);
         std::bitset<uSize>::set(0, bMovableBit);
+        return;
     }
 
 
@@ -85,6 +86,7 @@ namespace hyperdimensional {
         bool bMovableBit = std::bitset<uSize>::test(0);
         std::bitset<uSize>::operator>>=(1);
         std::bitset<uSize>::set(uSize - 1, bMovableBit);
+        return;
     }
 
 
@@ -104,6 +106,7 @@ namespace hyperdimensional {
                 }
             }
         }
+        return;
     }
 
 
@@ -126,12 +129,15 @@ namespace hyperdimensional {
     {
         std::bitset<uSize>::reset();
         do {
+            /*
+            * @todo OpenMP 'parallel for' candidate location depending on speed (most likely not worth it)
+            */
             for (unsigned u = 0; u < uSize; u++) {
-                if (rand() % 2)
-                    std::bitset<uSize>::flip(u);
+               if (rand() % 2) 
+                   std::bitset<uSize>::flip(u);
             }
         } while (uniform());
-
+        return;
     }
 
 }
