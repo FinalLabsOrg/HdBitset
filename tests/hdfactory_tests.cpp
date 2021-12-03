@@ -4,13 +4,13 @@
 
 using namespace hyperdimensional;
 
-TEST_CASE("factory::copy()", "[factory]") {
+TEST_CASE("hdfactory::copy()", "[hdfactory]") {
 
 	srand(0);
 
 	const unsigned uSize = 10048;
 
-	GIVEN("factory::random() is just called") {
+	GIVEN("hdfactory::random() is just called") {
 
 		std::shared_ptr<hdbitset<uSize>> pHdBitset = hdfactory<uSize>::random();
 
@@ -41,9 +41,9 @@ TEST_CASE("factory::copy()", "[factory]") {
 
 }
 
-TEST_CASE("factory::one()", "[factory]") {
+TEST_CASE("hdfactory::one()", "[hdfactory]") {
 
-	GIVEN("factory::one() is called") {
+	GIVEN("hdfactory::one() is called") {
 
 		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::one();
 
@@ -63,9 +63,9 @@ TEST_CASE("factory::one()", "[factory]") {
 
 }
 
-TEST_CASE("factory::random()", "[factory]") {
+TEST_CASE("hdfactory::random()", "[hdfactory]") {
 
-	GIVEN("factory::random() is called") {
+	GIVEN("hdfactory::random() is called") {
 
 		srand(0);
 
@@ -93,9 +93,9 @@ TEST_CASE("factory::random()", "[factory]") {
 
 }
 
-TEST_CASE("factory::raw()", "[factory]") {
+TEST_CASE("hdfactory::raw()", "[hdfactory]") {
 
-	GIVEN("factory::raw() is called using various parameters") {
+	GIVEN("hdfactory::raw() is called using various parameters") {
 
 		std::shared_ptr<hdbitset<5>> pHdbitset_5 = hdfactory<5>::raw();
 		std::shared_ptr<hdbitset<500>> pHdbitset_500 = hdfactory<500>::raw();
@@ -115,9 +115,9 @@ TEST_CASE("factory::raw()", "[factory]") {
 
 }
 
-TEST_CASE("factory::zero()", "[factory]") {
+TEST_CASE("hdfactory::zero()", "[hdfactory]") {
 
-	GIVEN("factory::zero() is called") {
+	GIVEN("hdfactory::zero() is called") {
 
 		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::zero();
 
