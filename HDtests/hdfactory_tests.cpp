@@ -12,11 +12,11 @@ TEST_CASE("factory::copy()", "[factory]") {
 
 	GIVEN("factory::random() is just called") {
 
-		std::shared_ptr<hdbitset<uSize>> pHdBitset = factory<uSize>::random();
+		std::shared_ptr<hdbitset<uSize>> pHdBitset = hdfactory<uSize>::random();
 
 		WHEN("Copying the thus created bitset") {
 
-			std::shared_ptr<hdbitset<uSize>> pCopy = factory<uSize>::copy(pHdBitset);
+			std::shared_ptr<hdbitset<uSize>> pCopy = hdfactory<uSize>::copy(pHdBitset);
 
 			THEN("The copy is a new object which has the same content as the original") {
 				REQUIRE_FALSE(pHdBitset == pCopy);
@@ -45,7 +45,7 @@ TEST_CASE("factory::one()", "[factory]") {
 
 	GIVEN("factory::one() is called") {
 
-		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = factory<10048>::one();
+		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::one();
 
 		THEN("the generated object has the appropriate size") {
 
@@ -69,7 +69,7 @@ TEST_CASE("factory::random()", "[factory]") {
 
 		srand(0);
 
-		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = factory<10048>::random();
+		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::random();
 
 		THEN("the generated object has the appropriate size") {
 
@@ -97,10 +97,10 @@ TEST_CASE("factory::raw()", "[factory]") {
 
 	GIVEN("factory::raw() is called using various parameters") {
 
-		std::shared_ptr<hdbitset<5>> pHdbitset_5 = factory<5>::raw();
-		std::shared_ptr<hdbitset<500>> pHdbitset_500 = factory<500>::raw();
-		std::shared_ptr<hdbitset<5000>> pHdbitset_5000 = factory<5000>::raw();
-		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = factory<10048>::raw();
+		std::shared_ptr<hdbitset<5>> pHdbitset_5 = hdfactory<5>::raw();
+		std::shared_ptr<hdbitset<500>> pHdbitset_500 = hdfactory<500>::raw();
+		std::shared_ptr<hdbitset<5000>> pHdbitset_5000 = hdfactory<5000>::raw();
+		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::raw();
 
 		THEN("size_u() for each case returns the correct size") {
 
@@ -119,7 +119,7 @@ TEST_CASE("factory::zero()", "[factory]") {
 
 	GIVEN("factory::zero() is called") {
 
-		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = factory<10048>::zero();
+		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::zero();
 
 		THEN("the generated object has the appropriate size") {
 

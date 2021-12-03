@@ -15,14 +15,14 @@ TEST_CASE("hdops::majority", "[hdops]") {
 
     GIVEN("Given 3 zero and 2 one hdbitsets in a map") {
 
-        std::shared_ptr<hdbitset<uSize>> pBitsetZero1 = factory<uSize>::zero();
-        std::shared_ptr<hdbitset<uSize>> pBitsetZero2 = factory<uSize>::zero();
-        std::shared_ptr<hdbitset<uSize>> pBitsetZero3 = factory<uSize>::zero();
-        std::shared_ptr<hdbitset<uSize>> pBitsetOne1 = factory<uSize>::one();
-        std::shared_ptr<hdbitset<uSize>> pBitsetOne2 = factory<uSize>::one();
-        std::shared_ptr<hdbitset<uSize>> pBitsetOne3 = factory<uSize>::one();
-        std::shared_ptr<hdbitset<uSize>> pBitsetOne4 = factory<uSize>::one();
-        std::shared_ptr<hdbitset<uSize>> pBitsetRandom = factory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pBitsetZero1 = hdfactory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pBitsetZero2 = hdfactory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pBitsetZero3 = hdfactory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pBitsetOne1 = hdfactory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pBitsetOne2 = hdfactory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pBitsetOne3 = hdfactory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pBitsetOne4 = hdfactory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pBitsetRandom = hdfactory<uSize>::random();
 
         pMap->insert({ 1, pBitsetZero1 });
         pMap->insert({ 2, pBitsetZero2 });
@@ -80,8 +80,8 @@ TEST_CASE("hdops::XOR", "[hdops]") {
 
     GIVEN("An all-zero and an all-one bitset") {
 
-        std::shared_ptr<hdbitset<uSize>> pBitsetZero = factory<uSize>::one();
-        std::shared_ptr<hdbitset<uSize>> pBitsetOne = factory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pBitsetZero = hdfactory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pBitsetOne = hdfactory<uSize>::zero();
 
         THEN("Their binding is all one") {
 
@@ -93,8 +93,8 @@ TEST_CASE("hdops::XOR", "[hdops]") {
 
     GIVEN("Two random HdBtisets") {
 
-        std::shared_ptr<hdbitset<uSize>> pBitset1 = factory<uSize>::random();
-        std::shared_ptr<hdbitset<uSize>> pBitset2 = factory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pBitset1 = hdfactory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pBitset2 = hdfactory<uSize>::random();
 
         THEN("Their binding equals their XORed values") {
 
@@ -118,8 +118,8 @@ TEST_CASE("hdops::eq() and hdops::noteq()", "[hdops]") {
 
         const unsigned uSize = 10048;
 
-        std::shared_ptr<hdbitset<uSize>> pHdBitset1 = factory<uSize>::zero();
-        std::shared_ptr<hdbitset<uSize>> pHdBitset2 = factory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pHdBitset1 = hdfactory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pHdBitset2 = hdfactory<uSize>::zero();
 
         THEN("Initially they are equal") {
             REQUIRE(hdops<uSize>::eq(pHdBitset1, pHdBitset2));
@@ -153,10 +153,10 @@ TEST_CASE("hdops::hamming()", "[hdops]") {
 
     GIVEN("Two zero and two one bitsets") {
 
-        std::shared_ptr<hdbitset<uSize>> pZero1 = factory<uSize>::zero();
-        std::shared_ptr<hdbitset<uSize>> pZero2 = factory<uSize>::zero();
-        std::shared_ptr<hdbitset<uSize>> pOne1 = factory<uSize>::one();
-        std::shared_ptr<hdbitset<uSize>> pOne2 = factory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pZero1 = hdfactory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pZero2 = hdfactory<uSize>::zero();
+        std::shared_ptr<hdbitset<uSize>> pOne1 = hdfactory<uSize>::one();
+        std::shared_ptr<hdbitset<uSize>> pOne2 = hdfactory<uSize>::one();
 
         THEN("pZero1 vs pZero2 distance is zero") {
 
@@ -185,8 +185,8 @@ TEST_CASE("hdops::hamming()", "[hdops]") {
 
         srand(0);
 
-        std::shared_ptr<hdbitset<uSize>> pHdBitset1 = factory<uSize>::random();
-        std::shared_ptr<hdbitset<uSize>> pHdBitset2 = factory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pHdBitset1 = hdfactory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pHdBitset2 = hdfactory<uSize>::random();
 
         THEN("Distance is commutative") {
             REQUIRE(hdops<uSize>::hamming(pHdBitset1, pHdBitset2) == hdops<uSize>::hamming(pHdBitset2, pHdBitset1));

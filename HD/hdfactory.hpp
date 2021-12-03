@@ -7,7 +7,7 @@
 namespace hyperdimensional {
 
 	template<unsigned uSize>
-	class factory
+	class hdfactory
 	{
 	public:
 
@@ -38,14 +38,14 @@ namespace hyperdimensional {
 	};
 
 	template<unsigned uSize>
-	inline std::shared_ptr<hdbitset<uSize>> factory<uSize>::copy(std::shared_ptr<hdbitset<uSize>> pCopyable)
+	inline std::shared_ptr<hdbitset<uSize>> hdfactory<uSize>::copy(std::shared_ptr<hdbitset<uSize>> pCopyable)
 	{
 		return std::make_shared<hdbitset<uSize>>(*pCopyable);
 	}
 
 
 	template<unsigned uSize>
-	inline std::shared_ptr<hdbitset<uSize>> factory<uSize>::one()
+	inline std::shared_ptr<hdbitset<uSize>> hdfactory<uSize>::one()
 	{
 		std::shared_ptr<hdbitset<uSize>> pGenerated = raw();
 		pGenerated->set();
@@ -53,7 +53,7 @@ namespace hyperdimensional {
 	}
 
 	template<unsigned uSize>
-	inline std::shared_ptr<hdbitset<uSize>> factory<uSize>::random()
+	inline std::shared_ptr<hdbitset<uSize>> hdfactory<uSize>::random()
 	{
 		std::shared_ptr<hdbitset<uSize>> pGenerated = raw();
 		pGenerated->shuffle();
@@ -61,13 +61,13 @@ namespace hyperdimensional {
 	}
 
 	template<unsigned uSize>
-	inline std::shared_ptr<hdbitset<uSize>> factory<uSize>::raw()
+	inline std::shared_ptr<hdbitset<uSize>> hdfactory<uSize>::raw()
 	{
 		return std::make_shared<hdbitset<uSize>>();
 	}
 
 	template<unsigned uSize>
-	inline std::shared_ptr<hdbitset<uSize>> factory<uSize>::zero()
+	inline std::shared_ptr<hdbitset<uSize>> hdfactory<uSize>::zero()
 	{
 		std::shared_ptr<hdbitset<uSize>> pGenerated = raw();
 		pGenerated->reset();

@@ -63,7 +63,7 @@ namespace hyperdimensional {
 		unsigned uMapSize = static_cast<unsigned>(pMap->size());
 		bool bMapSizeIsOdd = uMapSize % 2;
 
-		std::shared_ptr<hdbitset<uSize>> pMajority = factory<uSize>::zero();
+		std::shared_ptr<hdbitset<uSize>> pMajority = hdfactory<uSize>::zero();
 
 		if(bMapSizeIsOdd) 
 			uCountRequiredForMajority = uMapSize / 2;

@@ -27,8 +27,8 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
 
     GIVEN("One bitset with random values and its copy are created") {
 
-        std::shared_ptr<hdbitset<uSize>> pHdBitset = factory<uSize>::random();
-        std::shared_ptr<hdbitset<uSize>> pHdRotatable = factory<uSize>::copy(pHdBitset);
+        std::shared_ptr<hdbitset<uSize>> pHdBitset = hdfactory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pHdRotatable = hdfactory<uSize>::copy(pHdBitset);
 
         WHEN("Permutating zero times") {
 
@@ -183,7 +183,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
 
         GIVEN("One bitset with a single true value") {
 
-            std::shared_ptr<hdbitset<uSize>> pHdBitset = factory<uSize>::zero();
+            std::shared_ptr<hdbitset<uSize>> pHdBitset = hdfactory<uSize>::zero();
             pHdBitset->set(0, true);
 
             WHEN("Permutating +1") {
@@ -264,7 +264,7 @@ TEST_CASE("hdbitset::rotl()", "[hdbitset]") {
 
 	GIVEN("a hdbitset with only a single bit set") {
 
-		std::shared_ptr<hdbitset<uSize>> pHdBitset = factory<uSize>::zero();
+		std::shared_ptr<hdbitset<uSize>> pHdBitset = hdfactory<uSize>::zero();
 		pHdBitset->set(0, true);
 
 		THEN("Initially its count is 1") {
@@ -287,8 +287,8 @@ TEST_CASE("hdbitset::rotl()", "[hdbitset]") {
 
 	GIVEN("a hdbitset with random values and its copy") {
 
-		std::shared_ptr<hdbitset<uSize>> pShuffled = factory<uSize>::random();
-		std::shared_ptr<hdbitset<uSize>> pCopy = factory<uSize>::copy(pShuffled);
+		std::shared_ptr<hdbitset<uSize>> pShuffled = hdfactory<uSize>::random();
+		std::shared_ptr<hdbitset<uSize>> pCopy = hdfactory<uSize>::copy(pShuffled);
 
 		WHEN("rotl() is called size() times") {
 
@@ -324,7 +324,7 @@ TEST_CASE("hdbitset::rotr()", "[hdbitset]") {
 
 	GIVEN("a hdbitset with only a single bit set") {
 
-		std::shared_ptr<hdbitset<uSize>> pHdBitset = factory<uSize>::zero();
+		std::shared_ptr<hdbitset<uSize>> pHdBitset = hdfactory<uSize>::zero();
 		pHdBitset->set(0, true);
 
 		THEN("Initially its count is 1") {
@@ -347,8 +347,8 @@ TEST_CASE("hdbitset::rotr()", "[hdbitset]") {
 
 	GIVEN("a hdbitset with random values and its copy") {
 
-		std::shared_ptr<hdbitset<uSize>> pShuffled = factory<uSize>::random();
-		std::shared_ptr<hdbitset<uSize>> pCopy = factory<uSize>::copy(pShuffled);
+		std::shared_ptr<hdbitset<uSize>> pShuffled = hdfactory<uSize>::random();
+		std::shared_ptr<hdbitset<uSize>> pCopy = hdfactory<uSize>::copy(pShuffled);
 
 		WHEN("rotr() is called size() times") {
 
