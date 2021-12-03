@@ -1,8 +1,7 @@
 #include "catch.hpp"
 #include "../HD/hdbitset.hpp"
-#include "../HD/factory.hpp"
-#include "../HD/ops.hpp"
-
+#include "../HD/hdfactory.hpp"
+#include "../HD/hdops.hpp"
 #include <memory>
 
 using namespace hyperdimensional;
@@ -36,7 +35,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(0);
 
             THEN("Bitset is unchanged") {
-                REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
         }
@@ -46,7 +45,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(pHdBitset->size_u());
 
             THEN("Bitset is unchanged") {
-                REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
         }
@@ -56,7 +55,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(-pHdBitset->size_u());
 
             THEN("Bitset is unchanged") {
-                REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
         }
@@ -66,7 +65,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(1);
 
             THEN("Bitset changes (unless very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
         }
@@ -76,7 +75,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(-1);
 
             THEN("Bitset changes (unless with very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
         }
@@ -86,7 +85,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(pHdBitset->size_u() - 1);
 
             THEN("Bitset changes (unless with very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
             AND_WHEN("Permutating +1 times") {
@@ -94,7 +93,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
                 pHdRotatable->permutate(1);
 
                 THEN("Bitset returns to initial bitset") {
-                    REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                    REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
                 }
 
             }
@@ -106,7 +105,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(pHdBitset->size_u() - 5);
 
             THEN("Bitset changes (unless with very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
             AND_WHEN("Permutating +5 times") {
@@ -114,7 +113,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
                 pHdRotatable->permutate(+5);
 
                 THEN("Bitset returns to initial bitset") {
-                    REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                    REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
                 }
 
             }
@@ -126,7 +125,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(-(pHdBitset->size_u() - 5));
 
             THEN("Bitset changes (unless with very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
             AND_WHEN("Permutating -5 times") {
@@ -134,7 +133,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
                 pHdRotatable->permutate(-5);
 
                 THEN("Bitset returns to initial bitset") {
-                    REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                    REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
                 }
 
             }
@@ -146,7 +145,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(pHdBitset->size_u() + 5);
 
             THEN("Bitset changes (unless with very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
             AND_WHEN("Permutating -5 times") {
@@ -154,7 +153,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
                 pHdRotatable->permutate(-5);
 
                 THEN("Bitset returns to initial bitset") {
-                    REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                    REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
                 }
 
             }
@@ -166,7 +165,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
             pHdRotatable->permutate(-pHdBitset->size_u() - 5);
 
             THEN("Bitset changes (unless with very low probability)") {
-                CHECK_FALSE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                CHECK_FALSE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
             }
 
             AND_WHEN("Permutating +5 times") {
@@ -174,7 +173,7 @@ TEST_CASE("hdbitset::permutate()", "[hdbitset]") {
                 pHdRotatable->permutate(5);
 
                 THEN("Bitset returns to initial bitset") {
-                    REQUIRE(ops<uSize>::eq(pHdBitset, pHdRotatable));
+                    REQUIRE(hdops<uSize>::eq(pHdBitset, pHdRotatable));
                 }
 
             }
@@ -301,13 +300,13 @@ TEST_CASE("hdbitset::rotl()", "[hdbitset]") {
 
 			THEN("The copy is not equal to the rotated one (just with very low probability)") {
 
-				CHECK_FALSE(ops<uSize>::eq(pShuffled, pCopy));
+				CHECK_FALSE(hdops<uSize>::eq(pShuffled, pCopy));
 
 				AND_THEN("The last rotation results in a bitset equal to the original") {
 
 					pShuffled->rotl();
 
-					REQUIRE(ops<uSize>::eq(pShuffled, pCopy));
+					REQUIRE(hdops<uSize>::eq(pShuffled, pCopy));
 
 				}
 
@@ -361,13 +360,13 @@ TEST_CASE("hdbitset::rotr()", "[hdbitset]") {
 
 			THEN("The copy is not equal to the rotated one (just with very low probability)") {
 
-				CHECK_FALSE(ops<uSize>::eq(pShuffled, pCopy));
+				CHECK_FALSE(hdops<uSize>::eq(pShuffled, pCopy));
 
 				AND_THEN("The last rotation results in a bitset equal to the original") {
 
 					pShuffled->rotr();
 
-					REQUIRE(ops<uSize>::eq(pShuffled, pCopy));
+					REQUIRE(hdops<uSize>::eq(pShuffled, pCopy));
 
 				}
 

@@ -1,6 +1,6 @@
 #include "catch.hpp"
-#include "../HD/factory.hpp"
-#include "../HD/ops.hpp"
+#include "../HD/hdfactory.hpp"
+#include "../HD/hdops.hpp"
 
 using namespace hyperdimensional;
 
@@ -20,19 +20,19 @@ TEST_CASE("factory::copy()", "[factory]") {
 
 			THEN("The copy is a new object which has the same content as the original") {
 				REQUIRE_FALSE(pHdBitset == pCopy);
-				REQUIRE(ops<uSize>::eq(pHdBitset, pCopy));
+				REQUIRE(hdops<uSize>::eq(pHdBitset, pCopy));
 			}
 
 			pHdBitset->flip();
 
 			AND_THEN("The copy is not the same as a modified original") {
-				REQUIRE_FALSE(ops<uSize>::eq(pHdBitset, pCopy));
+				REQUIRE_FALSE(hdops<uSize>::eq(pHdBitset, pCopy));
 			}
 
 			pCopy->flip();
 
 			AND_THEN("The similarly changed copy is the same as the modified") {
-				REQUIRE(ops<uSize>::eq(pHdBitset, pCopy));
+				REQUIRE(hdops<uSize>::eq(pHdBitset, pCopy));
 			}
 
 		}

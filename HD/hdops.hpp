@@ -1,9 +1,9 @@
 #pragma once
 
-#include "hdbitset.hpp"
-#include "factory.hpp"
-#include <memory>
 #include <map>
+#include <memory>
+#include "hdbitset.hpp"
+#include "hdfactory.hpp"
 
 namespace hyperdimensional {
 
@@ -13,10 +13,25 @@ namespace hyperdimensional {
 	public:
 
 		/*
+		Returns true if the contens of the two underlying bitsets are identical
+		*/
+		static bool eq(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd);
+
+		/*
+		Returns the Hamming distance
+		*/
+		static unsigned hamming(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd);
+
+		/*
 		@return SP_HdBitset with 1s and 0s set according to the majority rule using the input pMap
 		In the case of an even number of inputs, an additional random vector is addded to map
 		*/
 		static std::shared_ptr<hdbitset<uSize>> majority(const std::shared_ptr<std::map<unsigned, std::shared_ptr<hdbitset<uSize>>>> pMap);
+
+		/*
+		Returns false if the contens of the two underlying bitsets are identical
+		*/
+		static bool noteq(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd);
 
 		/*
 		pLeft XOR pRight
@@ -26,6 +41,18 @@ namespace hyperdimensional {
 
 	};
 
+
+	template<unsigned uSize>
+	inline bool hdops<uSize>::eq(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd)
+	{
+		return (*pLeftHd) == (*pRightHd);
+	}
+
+	template<unsigned uSize>
+	inline unsigned hdops<uSize>::hamming(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd)
+	{
+		return hdops<uSize>::XOR(pLeftHd, pRightHd)->count_u();
+	}
 
 	template<unsigned uSize>
 	inline std::shared_ptr<hdbitset<uSize>> hdops<uSize>::majority(const std::shared_ptr<std::map<unsigned, std::shared_ptr<hdbitset<uSize>>>> pMap)
@@ -66,6 +93,11 @@ namespace hyperdimensional {
 
 	}
 
+	template<unsigned uSize>
+	inline bool hdops<uSize>::noteq(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd)
+	{
+		return !eq(pLeftHd, pRightHd);
+	}
 
 	template<unsigned uSize>
 	inline std::shared_ptr<hdbitset<uSize>> hdops<uSize>::XOR(const std::shared_ptr<hdbitset<uSize>> pLeft, const std::shared_ptr<hdbitset<uSize>> pRight)
