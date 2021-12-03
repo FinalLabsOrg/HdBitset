@@ -36,7 +36,7 @@ namespace hyperdimensional {
 	template<unsigned uSize>
 	inline unsigned ops<uSize>::hamming(const std::shared_ptr<hdbitset<uSize>> pLeftHd, const std::shared_ptr<hdbitset<uSize>> pRightHd)
 	{
-		return hdops::XOR(pLeftHd, pRightHd)->count_u();
+		return hdops<uSize>::XOR(pLeftHd, pRightHd)->count_u();
 	}
 
 	template<unsigned uSize>
