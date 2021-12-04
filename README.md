@@ -1,5 +1,5 @@
-This is a single-thread Hyperdimensional Bitset implementation. 
-Tests via Catch2.
-(c) 2021. FINAL Labs
+This is a single-thread hyperdimensional bitset implementation. **(c) 2021. FINAL Labs**
 
-To include, use #include "hd.h"
+To include, use ` #include "hd.h" `
+
+Tests via Catch2.
