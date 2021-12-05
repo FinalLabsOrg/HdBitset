@@ -132,9 +132,10 @@ namespace hyperdimensional {
             /*
             * @todo OpenMP 'parallel for' candidate location depending on speed (most likely not worth it)
             */
-            for (unsigned u = 0; u < uSize; u++) {
-               if (rand() % 2) 
-                   std::bitset<uSize>::flip(u);
+            size_t ullSize = static_cast<size_t>(uSize);
+            for (size_t u = 0; u < ullSize; u++) {
+                if (rand() % 2) 
+                    std::bitset<uSize>::operator[](u) = 1;
             }
         } while (uniform());
         return;
