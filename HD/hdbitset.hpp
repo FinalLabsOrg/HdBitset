@@ -1,5 +1,8 @@
 #pragma once
 #include <bitset>
+#include <random>
+#include <thread>
+#include "hdrandom.hpp"
 
 namespace hyperdimensional {
 
@@ -7,7 +10,12 @@ namespace hyperdimensional {
     class hdbitset :
         public std::bitset<uSize>
     {
+    private:
+        static thread_local hdrandom oHdRandom;
+        const size_t csSize;
+
     public:
+        static unsigned rand();
 
         hdbitset();
         hdbitset(std::bitset<uSize> oCopyable);
@@ -43,6 +51,7 @@ namespace hyperdimensional {
         Randomizes the contents of the hdbitset
         */
         void shuffle();
+        void shuffle(unsigned uShuffledWidth);
 
         /*
         bitset::all() || bitset::none()
@@ -53,13 +62,23 @@ namespace hyperdimensional {
 
 
     template<unsigned uSize>
-    inline hdbitset<uSize>::hdbitset() : std::bitset<uSize>()
+    thread_local hdrandom hdbitset<uSize>::oHdRandom;
+
+    template<unsigned uSize>
+    inline unsigned hdbitset<uSize>::rand()
+    {
+        return oHdRandom.rand();
+    }
+
+
+    template<unsigned uSize>
+    inline hdbitset<uSize>::hdbitset() : std::bitset<uSize>(), csSize(static_cast<size_t>(uSize))
     {
     }
 
 
     template<unsigned uSize>
-    inline hdbitset<uSize>::hdbitset(std::bitset<uSize> oCopyable) : std::bitset<uSize>(oCopyable)
+    inline hdbitset<uSize>::hdbitset(std::bitset<uSize> oCopyable) : std::bitset<uSize>(oCopyable), csSize(static_cast<size_t>(uSize))
     {
     }
 
@@ -109,11 +128,10 @@ namespace hyperdimensional {
         return;
     }
 
-
     template<unsigned uSize>
     inline bool hdbitset<uSize>::uniform() const
     {
-        return std::bitset<uSize>::all() || std::bitset<uSize>::none();
+        return std::bitset<uSize>::none() || std::bitset<uSize>::all();
     }
 
 
@@ -124,18 +142,33 @@ namespace hyperdimensional {
     }
 
 
+    /*
+     @todo do the type-cast at the object level
+     */
     template<unsigned uSize>
     inline void hdbitset<uSize>::shuffle()
     {
-        std::bitset<uSize>::reset();
+        // reset is not needed here, because each and every bit is set to rand()
         do {
-            /*
-            * @todo OpenMP 'parallel for' candidate location depending on speed (most likely not worth it)
-            */
-            size_t ullSize = static_cast<size_t>(uSize);
+            for (size_t u = 0; u < csSize; u++) {
+                std::bitset<uSize>::operator[](u) = oHdRandom.rand();
+            }
+        } while (uniform());
+        return;
+    }
+
+
+    /*
+    @todo do the type-cast at the object level
+    */
+    template<unsigned uSize>
+    inline void hdbitset<uSize>::shuffle(unsigned uShuffledWidth)
+    {
+        std::bitset<uSize>::reset();
+        size_t ullSize = static_cast<size_t>(uShuffledWidth);
+        do {
             for (size_t u = 0; u < ullSize; u++) {
-                if (rand() % 2) 
-                    std::bitset<uSize>::operator[](u) = 1;
+                std::bitset<uSize>::operator[](u) = oHdRandom.rand();
             }
         } while (uniform());
         return;

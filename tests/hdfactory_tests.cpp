@@ -93,6 +93,35 @@ TEST_CASE("hdfactory::random()", "[hdfactory]") {
 
 }
 
+TEST_CASE("hdfactory::random(uShuffledWidth)", "[hdfactory]") {
+
+	GIVEN("hdfactory::random(uShuffledWidth) is called") {
+
+		srand(0);
+		unsigned uShuffledWidth = 5000;
+
+		std::shared_ptr<hdbitset<10048>> pHdbitset_10048 = hdfactory<10048>::random(uShuffledWidth);
+
+		THEN("the generated object has the appropriate size") {
+
+			REQUIRE(pHdbitset_10048->size_u() == 10048);
+
+			AND_THEN("the generated object is not uniform") {
+				REQUIRE_FALSE(pHdbitset_10048->uniform());
+			}
+
+			THEN("Number of set bits is usually within 10% range of uShuffledWidth midpoint") {
+				double dRatio = (double)pHdbitset_10048->count_u() / (double)uShuffledWidth;
+				Approx aRatioTarget = Approx(0.5).epsilon(0.05);
+				CHECK(dRatio == aRatioTarget);
+			}
+
+		}
+
+	}
+
+}
+
 TEST_CASE("hdfactory::raw()", "[hdfactory]") {
 
 	GIVEN("hdfactory::raw() is called using various parameters") {

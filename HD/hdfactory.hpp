@@ -25,6 +25,7 @@ namespace hyperdimensional {
 		Returns a smart pointer to a newly created and shuffled hdbitset<uSize>
 		*/
 		static std::shared_ptr<hdbitset<uSize>> random();
+		static std::shared_ptr<hdbitset<uSize>> random(unsigned uShuffledWidth);
 
 		/*
 		Returns a smart pointer to a newly created default hdbitset<uSize>
@@ -57,6 +58,14 @@ namespace hyperdimensional {
 	{
 		std::shared_ptr<hdbitset<uSize>> pGenerated = raw();
 		pGenerated->shuffle();
+		return pGenerated;
+	}
+
+	template<unsigned uSize>
+	inline std::shared_ptr<hdbitset<uSize>> hdfactory<uSize>::random(unsigned uShuffledWidth)
+	{
+		std::shared_ptr<hdbitset<uSize>> pGenerated = raw();
+		pGenerated->shuffle(uShuffledWidth);
 		return pGenerated;
 	}
 

@@ -145,6 +145,42 @@ TEST_CASE("hdops::eq() and hdops::noteq()", "[hdops]") {
 
     }
 
+    GIVEN("One random HdBitsets and its copy are created") {
+
+        const unsigned uSize = 10048;
+
+        std::shared_ptr<hdbitset<uSize>> pHdBitset1 = hdfactory<uSize>::random();
+        std::shared_ptr<hdbitset<uSize>> pHdBitset2 = hdfactory<uSize>::copy(pHdBitset1);
+
+        THEN("Initially they are equal") {
+            REQUIRE(hdops<uSize>::eq(pHdBitset1, pHdBitset2));
+            REQUIRE_FALSE(hdops<uSize>::noteq(pHdBitset1, pHdBitset2));
+        }
+
+        WHEN("Altering one of the bitsets") {
+
+            pHdBitset1->flip(5500);
+
+            THEN("They are no longer equal") {
+                REQUIRE_FALSE(hdops<uSize>::eq(pHdBitset1, pHdBitset2));
+                REQUIRE(hdops<uSize>::noteq(pHdBitset1, pHdBitset2));
+            }
+
+            AND_WHEN("Altering the other the bitset similarly") {
+
+                pHdBitset2->flip(5500);
+
+                THEN("They are equal again") {
+                    REQUIRE(hdops<uSize>::eq(pHdBitset1, pHdBitset2));
+                    REQUIRE_FALSE(hdops<uSize>::noteq(pHdBitset1, pHdBitset2));
+                }
+
+            }
+
+        }
+
+    }
+
 }
 
 TEST_CASE("hdops::hamming()", "[hdops]") {

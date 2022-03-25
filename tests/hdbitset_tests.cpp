@@ -6,6 +6,27 @@
 
 using namespace hyperdimensional;
 
+TEST_CASE("hdbitset::rand() static", "[hdbitset]") {
+
+    GIVEN("A large set of random numbers") {
+
+        unsigned uRandomCount = 50000;
+        unsigned uOne = 0;
+        for(unsigned i = 0; i < uRandomCount; i++) {
+            uOne += hdbitset<10048>::rand();
+        }
+
+        THEN("Number of ones is usually within 2% range of midpoint") {
+            double dRatio = (double)uOne / (double)uRandomCount;
+            Approx aRatioTarget = Approx(0.5).epsilon(0.01);
+            CHECK(dRatio == aRatioTarget);
+        }
+
+    }
+
+}
+
+
 TEST_CASE("hdbitset::count_u()", "[hdbitset]") {
 
     GIVEN("A shuffled hdbitset") {
@@ -432,6 +453,48 @@ TEST_CASE("hdbitset::shuffle()", "[hdbitset]") {
 
         THEN("Number of set bits is usually within 10% range of midpoint") {
             double dRatio = (double)oHdbitset_10048.std::bitset<10048>::count() / (double)10048;
+            Approx aRatioTarget = Approx(0.5).epsilon(0.05);
+            CHECK(dRatio == aRatioTarget);
+        }
+
+    }
+
+}
+
+TEST_CASE("hdbitset::shuffle(uShuffledWidth)", "[hdbitset]") {
+
+    GIVEN("An all-zero hdbitset that is shuffled using uShuffledWidth") {
+
+        unsigned uShuffledWidth = 5000;
+        hdbitset<10048> oHdbitset_10048;
+        oHdbitset_10048.reset();
+        oHdbitset_10048.shuffle(uShuffledWidth);
+
+        THEN("the new bitset is not uniform()") {
+            REQUIRE_FALSE(oHdbitset_10048.uniform());
+        }
+
+        THEN("Number of set bits is usually within 10% range of the uShuffledWidth midpoint") {
+            double dRatio = (double)oHdbitset_10048.std::bitset<10048>::count() / (double)uShuffledWidth;
+            Approx aRatioTarget = Approx(0.5).epsilon(0.05);
+            CHECK(dRatio == aRatioTarget);
+        }
+
+    }
+
+    GIVEN("An all-one hdbitset that is shuffled") {
+
+        unsigned uShuffledWidth = 5000;
+        hdbitset<10048> oHdbitset_10048;
+        oHdbitset_10048.set();
+        oHdbitset_10048.shuffle(uShuffledWidth);
+
+        THEN("the new bitset is not uniform()") {
+            REQUIRE_FALSE(oHdbitset_10048.uniform());
+        }
+
+        THEN("Number of set bits is usually within 10% range of midpoint") {
+            double dRatio = (double)oHdbitset_10048.std::bitset<10048>::count() / (double)uShuffledWidth;
             Approx aRatioTarget = Approx(0.5).epsilon(0.05);
             CHECK(dRatio == aRatioTarget);
         }
