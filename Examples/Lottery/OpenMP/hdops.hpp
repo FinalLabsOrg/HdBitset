@@ -73,7 +73,7 @@ namespace hyperdimensional {
 		for (unsigned u = 0; u < uSize; u++) {
 
 			// adding a random bit in the case of even bitsets
-			uCountOfBitsThatAreSet = bMapSizeIsOdd ? 0 : hdbitset::rand();
+			uCountOfBitsThatAreSet = bMapSizeIsOdd ? 0 : hdbitset<uSize>::rand();
 
 			for (auto it = pMap->begin(); it != pMap->end(); it++) {
 				uCountOfBitsThatAreSet += it->second->operator[](u); // no need for range checking here

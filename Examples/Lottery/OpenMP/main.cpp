@@ -11,21 +11,23 @@ using namespace hyperdimensional;
 
 int main() {
 
-	unsigned long long uAttemptCount = cuInitialAttemptCount;
+	unsigned uMatchCount, uCheckpointCount;
+	double dOmpStartTime, dOmpEndTime, dActualDuration, dActualCheckpointInterval;
+	unsigned long long ullAttemptCount;
 	std::shared_ptr<experiment> pSerialExperiment;
 
 	std::cout << "Running experiments en masse using " << cuThreads << " threads. " << std::endl;
 
 	for (unsigned uShuffleWidth = 1; uShuffleWidth < uHd10048; uShuffleWidth++) {
 
+		ullAttemptCount = cuInitialAttemptCount;
+		dActualDuration = 0.0;
+		uCheckpointCount = 0;
+
 		std::shared_ptr<hdbitset<uHd10048>> pReferenceBitset = hdfactory<uHd10048>::random(uShuffleWidth);
 
 		pSerialExperiment = std::make_shared<experiment>(uShuffleWidth);
 		pSerialExperiment->setGuessableBitset(pReferenceBitset);
-
-		double dOmpStartTime = omp_get_wtime();
-		unsigned long long ullTotalTicksForControl = 0;
-		unsigned uMatchCount = 0;
 
 		std::cout << std::endl;
 		std::cout << "Experiment #" << uShuffleWidth << ".";
@@ -33,32 +35,50 @@ int main() {
 		std::cout << "The first " << uShuffleWidth << " bytes are randomized and the rest are kept 0.";
 		std::cout << std::endl;
 
-#pragma omp parallel default(none), shared(uAttemptCount, pReferenceBitset, uShuffleWidth), reduction(+:ullTotalTicksForControl,uMatchCount), num_threads(cuThreads)
-		{
-			std::shared_ptr<experiment> pPrivateExperiment = std::make_shared<experiment>(uShuffleWidth);
-			pPrivateExperiment->setGuessableBitset(pReferenceBitset);
+		do {
 
-			std::shared_ptr<massexperiment> pPrivateMassExperimentRunner = std::make_shared<massexperiment>();
-			pPrivateMassExperimentRunner->setExperiment(pPrivateExperiment);
+			uMatchCount = 0;
+			unsigned uThreadCountControl = 0;
+			dOmpStartTime = omp_get_wtime();
 
-			pPrivateMassExperimentRunner->runMassExperiment(uAttemptCount);
-			ullTotalTicksForControl = pPrivateMassExperimentRunner->getTickCount();
-			uMatchCount += pPrivateMassExperimentRunner->getSuccessCount();
-		}
+			#pragma omp parallel default(none), shared(ullAttemptCount, pReferenceBitset, uShuffleWidth), reduction(+:uMatchCount,uThreadCountControl), num_threads(cuThreads)
+			{
+				std::shared_ptr<experiment> pPrivateExperiment = std::make_shared<experiment>(uShuffleWidth);
+				pPrivateExperiment->setGuessableBitset(pReferenceBitset);
 
-		double dOmpEndTime = omp_get_wtime();
-		double dActualDuration = dOmpEndTime - dOmpStartTime;
+				std::shared_ptr<massexperiment> pPrivateMassExperimentRunner = std::make_shared<massexperiment>();
+				pPrivateMassExperimentRunner->setExperiment(pPrivateExperiment);
 
-		std::cout << ullTotalTicksForControl << " trials yielded " << uMatchCount << " matches.";
+				pPrivateMassExperimentRunner->runMassExperiment(ullAttemptCount);
+				uMatchCount += pPrivateMassExperimentRunner->getSuccessCount();
+				uThreadCountControl = 1;
+			}
+
+			dOmpEndTime = omp_get_wtime();
+			dActualCheckpointInterval = dOmpEndTime - dOmpStartTime;
+			dActualDuration += dActualCheckpointInterval;
+
+			if (uThreadCountControl != cuThreads) {
+				std::cout << "Observed thread count is " << uThreadCountControl << " vs. the expected " << cuThreads << ".";
+				std::cout << "Exiting.";
+				exit(1);
+			}
+
+			if (dActualCheckpointInterval * cdCheckpointEasing < cdMaxCheckpointInterval) {
+				ullAttemptCount = static_cast<unsigned>(static_cast<double>(ullAttemptCount) * cdCheckpointEasing);
+			}
+
+			uCheckpointCount++;
+
+		} while (!uMatchCount);
+
+		std::cout << "The experiments yielded " << uMatchCount << " matches with " << uCheckpointCount << " checkpoints, in " << dActualDuration << " seconds";
 		std::cout << std::endl;
-		std::cout << "This took " << dActualDuration << " seconds";
-		std::cout << std::endl;
-		std::cout << "The observed thread count is " << ullTotalTicksForControl / uAttemptCount<< ".";
-		std::cout << std::endl;
 
+		/*
 		if (uMatchCount<=cuNoMatchTreshold) {
 
-			uAttemptCount = static_cast<unsigned>(uAttemptCount * cdNoMatchMultiplier);
+			uAttemptCount = static_cast<unsigned>(cdNoMatchMultiplier * static_cast<double>(uAttemptCount));
 			double dExpectedDuration = dActualDuration * cdNoMatchMultiplier;
 
 			std::cout << "There were not enough matches and therefore the trial count is increased for the next experiment.";
@@ -67,16 +87,12 @@ int main() {
 			std::cout << std::endl;
 
 			if (dExpectedDuration > cuEndtimeNotification) {
-
 				time_t result = time(NULL) + static_cast<time_t>(dExpectedDuration);
-				char str[26];
-				ctime_s(str, sizeof str, &result);
-
-				std::cout << "This next experiment is expected to end at " << str;
-
+				std::cout << "This next experiment is expected to end at " << ctime(&result);
 			}
 
 		}
+		*/
 
 	}
 

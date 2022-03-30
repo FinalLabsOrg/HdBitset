@@ -19,8 +19,8 @@ namespace hyperdimensional {
 	* https://codereview.stackexchange.com/questions/109260/seed-stdmt19937-from-stdrandom-device
 	*/
 	hdrandom::hdrandom() :
-		oGenerator(std::random_device{}()),
-		oDistribution(0, 1)
+		oDistribution(0, 1),
+		oGenerator(std::random_device{}())
 	{
 		oGenerator.discard(uDiscard);
 	}
