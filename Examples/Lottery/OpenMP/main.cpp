@@ -26,9 +26,6 @@ int main() {
 
 		std::shared_ptr<hdbitset<uHd10048>> pReferenceBitset = hdfactory<uHd10048>::random(uShuffleWidth);
 
-		pSerialExperiment = std::make_shared<experiment>(uShuffleWidth);
-		pSerialExperiment->setGuessableBitset(pReferenceBitset);
-
 		std::cout << std::endl;
 		std::cout << "Experiment #" << uShuffleWidth << ".";
 		std::cout << std::endl;
@@ -74,25 +71,6 @@ int main() {
 
 		std::cout << "The experiments yielded " << uMatchCount << " matches with " << uCheckpointCount << " checkpoints, in " << dActualDuration << " seconds";
 		std::cout << std::endl;
-
-		/*
-		if (uMatchCount<=cuNoMatchTreshold) {
-
-			uAttemptCount = static_cast<unsigned>(cdNoMatchMultiplier * static_cast<double>(uAttemptCount));
-			double dExpectedDuration = dActualDuration * cdNoMatchMultiplier;
-
-			std::cout << "There were not enough matches and therefore the trial count is increased for the next experiment.";
-			std::cout << std::endl;
-			std::cout << "Therefore the next experiment is expected to last a bit over " << static_cast<unsigned>(dExpectedDuration) << " seconds.";
-			std::cout << std::endl;
-
-			if (dExpectedDuration > cuEndtimeNotification) {
-				time_t result = time(NULL) + static_cast<time_t>(dExpectedDuration);
-				std::cout << "This next experiment is expected to end at " << ctime(&result);
-			}
-
-		}
-		*/
 
 	}
 
