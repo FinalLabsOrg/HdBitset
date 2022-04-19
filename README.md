@@ -1,4 +1,4 @@
-This is a single-thread hyperdimensional bitset implementation. **(c) 2021. FINAL Labs**
+This is a single-thread hyperdimensional bitset implementation with parallel computing in mind. **(c) 2021. FINAL Labs**
 
 The project is highly in an alpha stage and is subject change without notice.
 
