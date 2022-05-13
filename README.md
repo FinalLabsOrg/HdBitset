@@ -1,5 +1,5 @@
-This is a single-thread hyperdimensional bitset implementation.
-The project is still in alpha and is subject to change without notice.
+This is a single-thread hyperdimensional bitset implementation with parallel computing (OpenMP & OpenMPI) in mind.
+The project is in alpha and is subject to change without notice.
 
 See the github repo for issues and further comments.
 https://github.com/FinalLabsOrg/HdBitset
