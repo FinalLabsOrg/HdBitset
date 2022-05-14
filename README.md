@@ -1,4 +1,4 @@
-This is a single-thread hyperdimensional bitset implementation with parallel computing (OpenMP & OpenMPI) in mind.
+This is a single-thread hyperdimensional wrapper for the C++ bitset with parallel computing (OpenMP & OpenMPI) in mind.
 The project is in alpha and is subject to change without notice.
 
 See the github repo for issues and further comments.
