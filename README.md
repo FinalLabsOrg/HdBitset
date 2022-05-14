@@ -9,7 +9,7 @@ To include, use #include "flhdc.h"
 Tests via Catch2.
 
 **(c) FINAL Labs**
-https://www.final-labs.org
+**https://www.final-labs.org**
 
 Logo (c) Dynamic Wang, Unsplash
 https://unsplash.com/photos/bLIkWFelVKM
