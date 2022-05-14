@@ -4,8 +4,9 @@ The project is in alpha and is subject to change without notice.
 See the github repo for issues and further comments.
 https://github.com/FinalLabsOrg/HdBitset
 
-To include, use #include "flhdc.h"
-"flhdc/types.h" contains some settings that might be changes, e.g. data-types, containers, sizes etc.
+To include, use **#include "flhdc.h"**
+
+**"flhdc/types.h"** contains some settings that might be changes, e.g. data-types, containers, sizes etc.
 
 Tests via Catch2.
 
