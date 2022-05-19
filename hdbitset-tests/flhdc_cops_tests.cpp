@@ -78,17 +78,17 @@ TEST_CASE("cops::bundle", "[cops]") {
 
 }
 
-TEST_CASE("cops::closest", "[cops]") {
+TEST_CASE("cops::get_closest_key", "[cops]") {
     
     p_randengine_t pRandengine = randengine_factory::factory(0, 0, 0);
-    p_hdbitset10k pReference = hdbitset10k_factory::random(pRandengine);
+    p_hdbitset10k_t pReference = hdbitset10k_factory::random(pRandengine);
 
     p_collection10k_t pCollection = std::make_shared<collection10k_t>();
 
     GIVEN("An empty initial map") {
 
         THEN("A logic_error exception is thrown") {
-            REQUIRE_THROWS_AS(cops10k::closest(pCollection, pReference), std::logic_error);
+            REQUIRE_THROWS_AS(cops10k::get_closest_key(pCollection, pReference), std::logic_error);
         }
 
     }
@@ -98,9 +98,9 @@ TEST_CASE("cops::closest", "[cops]") {
         hdbitset_collection_key_t uExpectedId = 1111;
         pCollection->insert({ uExpectedId, pReference });
 
-        THEN("The closest ID is the Id of this element") {
+        THEN("The get_closest_key ID is the Id of this element") {
 
-            hdbitset_collection_key_t uActualClosestId = cops10k::closest(pCollection, pReference);
+            hdbitset_collection_key_t uActualClosestId = cops10k::get_closest_key(pCollection, pReference);
             REQUIRE(uExpectedId == uActualClosestId);
 
             AND_GIVEN("The several additional random elements in the map") {
@@ -123,16 +123,16 @@ TEST_CASE("cops::closest", "[cops]") {
                 pCollection->insert({ -41, hdbitset10k_factory::random(pReference->get_randengine()) });
                 pCollection->insert({ -51, hdbitset10k_factory::random(pReference->get_randengine()) });
 
-                THEN("The closest ID is still the Id of the reference element") {
+                THEN("The get_closest_key ID is still the Id of the reference element") {
 
-                    uActualClosestId = cops10k::closest(pCollection, pReference);
+                    uActualClosestId = cops10k::get_closest_key(pCollection, pReference);
                     REQUIRE(uExpectedId == uActualClosestId);
 
                 }
 
                 AND_GIVEN("The reference is perturbed a bit") {
 
-                    p_hdbitset10k pReference2 = hdbitset10k_factory::copy(pReference);
+                    p_hdbitset10k_t pReference2 = hdbitset10k_factory::copy(pReference);
                     pReference2->flip(0);
                     pReference2->flip(1);
                     pReference2->flip(2);
@@ -143,17 +143,17 @@ TEST_CASE("cops::closest", "[cops]") {
                     pReference2->flip(7);
                     pReference2->flip(8);
 
-                    THEN("The closest ID is still the Id of the reference element") {
+                    THEN("The get_closest_key ID is still the Id of the reference element") {
 
-                        uActualClosestId = cops10k::closest(pCollection, pReference2);
+                        uActualClosestId = cops10k::get_closest_key(pCollection, pReference2);
                         REQUIRE(uExpectedId == uActualClosestId);
 
-                        AND_THEN("Adding this perturbed item, its ID will be the closest one") {
+                        AND_THEN("Adding this perturbed item, its ID will be the get_closest_key one") {
 
                             hdbitset_collection_key_t uExpectedId2 = 9999;
                             pCollection->insert({ uExpectedId2, pReference2 });
 
-                            uActualClosestId = cops10k::closest(pCollection, pReference2);
+                            uActualClosestId = cops10k::get_closest_key(pCollection, pReference2);
                             REQUIRE(uExpectedId2 == uActualClosestId);
 
                         }
@@ -164,14 +164,14 @@ TEST_CASE("cops::closest", "[cops]") {
                 
                 AND_GIVEN("A brand new reference is used") {
 
-                    p_hdbitset10k pReference3 = hdbitset10k_factory::random(pReference->get_randengine());
+                    p_hdbitset10k_t pReference3 = hdbitset10k_factory::random(pReference->get_randengine());
 
                     /*
                     This is a stochastic test and will fail on occasion.
                     */
-                    THEN("The closest ID is not (neccesarily) the Id of the reference element") {
+                    THEN("The get_closest_key ID is not (neccesarily) the Id of the reference element") {
 
-                        uActualClosestId = cops10k::closest(pCollection, pReference3);
+                        uActualClosestId = cops10k::get_closest_key(pCollection, pReference3);
                         REQUIRE(uExpectedId != uActualClosestId);
 
                     }

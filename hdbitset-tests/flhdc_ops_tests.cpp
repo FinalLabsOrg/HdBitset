@@ -53,16 +53,16 @@ TEST_CASE("ops::crossover", "[ops]") {
 
     GIVEN("A zero and a one bitset") {
 
-        p_hdbitset10k pZero = hdbitset10k_factory::zero(pRandEngine);
-        p_hdbitset10k pOne = hdbitset10k_factory::one(pRandEngine);
+        p_hdbitset10k_t pZero = hdbitset10k_factory::zero(pRandEngine);
+        p_hdbitset10k_t pOne = hdbitset10k_factory::one(pRandEngine);
 
         THEN("Their crossover shows uCut ones") {
-            p_hdbitset10k pCrossover = ops10k::crossover(pOne, pZero, uCut);
+            p_hdbitset10k_t pCrossover = ops10k::crossover(pOne, pZero, uCut);
             unsigned uOne = pCrossover->count_u();
             REQUIRE(uOne == uCut);
 
             AND_THEN("Their reverse crossover shows uSize-uCut ones") {
-                p_hdbitset10k pCrossover2 = ops10k::crossover(pZero, pOne, uCut);
+                p_hdbitset10k_t pCrossover2 = ops10k::crossover(pZero, pOne, uCut);
                 uOne = pCrossover2->count_u();
                 unsigned uSize = pCrossover2->size_u(); // 10048
                 REQUIRE(uOne == (uSize - uCut));
@@ -74,22 +74,22 @@ TEST_CASE("ops::crossover", "[ops]") {
 
     GIVEN("Two random hdbitsets and their flips") {
 
-        p_hdbitset10k pBitset1 = hdbitset10k_factory::random(pRandEngine);
-        p_hdbitset10k pFlippedBitset1 = hdbitset10k_factory::copy(pBitset1);
+        p_hdbitset10k_t pBitset1 = hdbitset10k_factory::random(pRandEngine);
+        p_hdbitset10k_t pFlippedBitset1 = hdbitset10k_factory::copy(pBitset1);
         pFlippedBitset1->flip();
 
-        p_hdbitset10k pBitset2 = hdbitset10k_factory::random(pRandEngine);
-        p_hdbitset10k pFlippedBitset2 = hdbitset10k_factory::copy(pBitset2);
+        p_hdbitset10k_t pBitset2 = hdbitset10k_factory::random(pRandEngine);
+        p_hdbitset10k_t pFlippedBitset2 = hdbitset10k_factory::copy(pBitset2);
         pFlippedBitset2->flip();
 
         THEN("Their crossover flipped and their flippied crossover are the same") {
 
-            p_hdbitset10k pCrossover = ops10k::crossover(pBitset1, pBitset2, 5000);
+            p_hdbitset10k_t pCrossover = ops10k::crossover(pBitset1, pBitset2, 5000);
             pCrossover->flip();
 
             pBitset1->flip();
             pBitset2->flip();
-            p_hdbitset10k pFlippedCrossover = ops10k::crossover(pBitset1, pBitset2, 5000);
+            p_hdbitset10k_t pFlippedCrossover = ops10k::crossover(pBitset1, pBitset2, 5000);
 
             REQUIRE(ops10k::eq(pCrossover, pFlippedCrossover));
 

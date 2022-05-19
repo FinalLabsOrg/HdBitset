@@ -27,10 +27,10 @@ TEST_CASE("hdbitset::get_generator()", "[hdbitset]") {
     GIVEN("Two generators and two hdbitsets") {
 
         p_randengine_t pRandEngine1 = randengine_factory::factory(0, 1, 2);
-        p_hdbitset10k pBitset1 = hdbitset10k_factory::random(pRandEngine1);
+        p_hdbitset10k_t pBitset1 = hdbitset10k_factory::random(pRandEngine1);
 
         p_randengine_t pRandEngine2 = randengine_factory::factory(0, 1, 2);
-        p_hdbitset10k pBitset2 = hdbitset10k_factory::random(pRandEngine2);
+        p_hdbitset10k_t pBitset2 = hdbitset10k_factory::random(pRandEngine2);
 
         THEN("hdbitset::get_generator() returns the respective generators") {
 

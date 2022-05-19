@@ -2,8 +2,8 @@
 
 #include <bitset>
 #include <memory>
-#include "hdbitset.hpp"
-#include "randengine.hpp"
+#include "flhdc_hdbitset.hpp"
+#include "flhdc_randengine.hpp"
 
 namespace flhdc {
 

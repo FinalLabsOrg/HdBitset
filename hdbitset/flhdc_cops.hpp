@@ -3,10 +3,10 @@
 #include <map>
 #include <memory>
 #include <stdexcept>
-#include "hdbitset.hpp"
-#include "hdbitset_factory.hpp"
-#include "ops.hpp"
-#include "types.h"
+#include "flhdc_hdbitset.hpp"
+#include "flhdc_hdbitset_factory.hpp"
+#include "flhdc_ops.hpp"
+#include "flhdc_types.h"
 
 namespace flhdc {
 
@@ -34,7 +34,7 @@ namespace flhdc {
 		@return the index of the pCollection element that has the smallest hamming distance from pComparable.
 		If several elements have the same best distance, the one encountered first is returned.
 		*/
-		static hdbitset_collection_key_t closest(const p_hdbitset_collection_t pCollection, p_hdbitset_t pComparable);
+		static hdbitset_collection_key_t get_closest_key(const p_hdbitset_collection_t pCollection, p_hdbitset_t pComparable);
 
 		/*
 		@return a smart pointer to a new hdbitset with 1s and 0s set according to the majority rule using the input pCollection.
@@ -52,11 +52,11 @@ namespace flhdc {
 	}
 
 	template<unsigned cuSize>
-	inline hdbitset_collection_key_t cops<cuSize>::closest(const p_hdbitset_collection_t pCollection, p_hdbitset_t pComparable)
+	inline hdbitset_collection_key_t cops<cuSize>::get_closest_key(const p_hdbitset_collection_t pCollection, p_hdbitset_t pComparable)
 	{
 
 		if (!static_cast<unsigned>(pCollection->size())) {
-			throw std::logic_error("Map for closest is empty.");
+			throw std::logic_error("Map for get_closest_key is empty.");
 		}
 
 		// worst case is a hamming distance of cuSize;

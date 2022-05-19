@@ -3,9 +3,9 @@
 #include <map>
 #include <memory>
 #include <stdexcept>
-#include "hdbitset.hpp"
-#include "hdbitset_factory.hpp"
-#include "types.h"
+#include "flhdc_hdbitset.hpp"
+#include "flhdc_hdbitset_factory.hpp"
+#include "flhdc_types.h"
 
 namespace flhdc {
 

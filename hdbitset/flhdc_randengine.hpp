@@ -1,7 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <random>
-#include "types.h"
+#include "flhdc_types.h"
 
 namespace flhdc {
 

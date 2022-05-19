@@ -2,7 +2,7 @@
 #include <bitset>
 #include <random>
 #include <thread>
-#include "randengine.hpp"
+#include "flhdc_randengine.hpp"
 
 namespace flhdc {
 

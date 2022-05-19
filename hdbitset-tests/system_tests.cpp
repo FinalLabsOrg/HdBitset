@@ -27,7 +27,7 @@ TEST_CASE("Shared Pointer Size", "[PointerSize]") {
     constexpr unsigned cuExpectedSize = 8;
 
     flhdc::p_randengine_t pRandEngine = flhdc::randengine_factory::factory(1, 2, 3);
-    flhdc::p_hdbitset10k p10k = flhdc::hdbitset10k_factory::raw(pRandEngine);
+    flhdc::p_hdbitset10k_t p10k = flhdc::hdbitset10k_factory::raw(pRandEngine);
 
     REQUIRE( sizeof(p10k.get()) == cuExpectedSize);
 
